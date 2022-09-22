@@ -12,14 +12,14 @@ using projetocripto.Models;
 namespace projetocripto.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20220824235455_initialCreate")]
+    [Migration("20220922020143_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -33,7 +33,9 @@ namespace projetocripto.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("cidade")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("estado")
                         .HasColumnType("int");
@@ -42,11 +44,13 @@ namespace projetocripto.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("id");
 
-                    b.ToTable("clientes");
+                    b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
@@ -57,10 +61,10 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("clienteid")
+                    b.Property<int>("clienteid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("moedaid")
+                    b.Property<int>("moedaid")
                         .HasColumnType("int");
 
                     b.Property<float>("quantidade")
@@ -72,7 +76,7 @@ namespace projetocripto.Migrations
 
                     b.HasIndex("moedaid");
 
-                    b.ToTable("contas");
+                    b.ToTable("Contas");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Moeda", b =>
@@ -83,8 +87,13 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<float>("compra")
+                        .HasColumnType("real");
+
                     b.Property<string>("descricao")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<float>("quantidade")
                         .HasColumnType("real");
@@ -94,7 +103,7 @@ namespace projetocripto.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("moedas");
+                    b.ToTable("Moedas");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Transasao", b =>
@@ -105,7 +114,7 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("contaid")
+                    b.Property<int>("contaid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("data")
@@ -124,18 +133,22 @@ namespace projetocripto.Migrations
 
                     b.HasIndex("contaid");
 
-                    b.ToTable("transasoes");
+                    b.ToTable("Transacoes");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
                 {
                     b.HasOne("projetocripto.Models.Cliente", "cliente")
                         .WithMany("contas")
-                        .HasForeignKey("clienteid");
+                        .HasForeignKey("clienteid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("projetocripto.Models.Moeda", "moeda")
                         .WithMany("contas")
-                        .HasForeignKey("moedaid");
+                        .HasForeignKey("moedaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("cliente");
 
@@ -146,7 +159,9 @@ namespace projetocripto.Migrations
                 {
                     b.HasOne("projetocripto.Models.Conta", "conta")
                         .WithMany("transasoes")
-                        .HasForeignKey("contaid");
+                        .HasForeignKey("contaid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("conta");
                 });
