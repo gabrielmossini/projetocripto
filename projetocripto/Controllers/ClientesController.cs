@@ -45,6 +45,15 @@ namespace projetocripto.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+            var estado = Enum.GetValues(typeof(Estado))
+                .Cast<Estado>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                });
+
+            ViewBag.bagEstado = estado;
             return View();
         }
 
@@ -77,6 +86,15 @@ namespace projetocripto.Controllers
             {
                 return NotFound();
             }
+
+            var estado = Enum.GetValues(typeof(Estado))
+                .Cast<Estado>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                });
+
             return View(cliente);
         }
 
