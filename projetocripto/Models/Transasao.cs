@@ -17,7 +17,7 @@ namespace projetocripto.Models
         [Display(Name = "Conta: ")]
         public Conta conta { get; set; }
 
-        [Display(Name = "Quantidade: ")]
+        [Display(Name = "Data: ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy")]
         public DateTime data { get; set; }
 
