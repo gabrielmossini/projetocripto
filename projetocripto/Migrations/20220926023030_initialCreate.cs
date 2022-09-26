@@ -16,9 +16,8 @@ namespace projetocripto.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    cidade = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    estado = table.Column<int>(type: "int", nullable: false),
-                    idade = table.Column<int>(type: "int", nullable: false)
+                    setor = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    secretaria = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,10 +30,10 @@ namespace projetocripto.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    nome = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     descricao = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    quantidade = table.Column<float>(type: "real", nullable: false),
-                    compra = table.Column<float>(type: "real", nullable: false),
-                    venda = table.Column<float>(type: "real", nullable: false)
+                    quantidade = table.Column<int>(type: "int", nullable: false),
+                    valor = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,18 +73,15 @@ namespace projetocripto.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    contaid = table.Column<int>(type: "int", nullable: false),
-                    data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    quantidade = table.Column<float>(type: "real", nullable: false),
-                    valor = table.Column<float>(type: "real", nullable: false),
-                    operacao = table.Column<int>(type: "int", nullable: false)
+                    impressoraid = table.Column<int>(type: "int", nullable: false),
+                    data = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transacoes", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Transacoes_Contas_contaid",
-                        column: x => x.contaid,
+                        name: "FK_Transacoes_Contas_impressoraid",
+                        column: x => x.impressoraid,
                         principalTable: "Contas",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -102,9 +98,9 @@ namespace projetocripto.Migrations
                 column: "moedaid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transacoes_contaid",
+                name: "IX_Transacoes_impressoraid",
                 table: "Transacoes",
-                column: "contaid");
+                column: "impressoraid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

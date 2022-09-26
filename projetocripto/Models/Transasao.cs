@@ -13,25 +13,12 @@ namespace projetocripto.Models
         [Display(Name = "ID:")]
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Campo CONTA é obrigatorio...")]
-        [Display(Name = "Conta: ")]
-        public Conta conta { get; set; }
+        [Required(ErrorMessage = "Campo IMPRESSORA é obrigatorio...")]
+        [Display(Name = "Impressora: ")]
+        public Conta impressora { get; set; }
 
         [Display(Name = "Data: ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy")]
         public DateTime data { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        [Display(Name = "Quantidade:")]
-        public float quantidade { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        [Display(Name = "Venda:")]
-        public float valor { get; set; }
-
-        [Required(ErrorMessage = "Campo OPERAÇÃO é obrigatorio...")]
-        [Display(Name = "Operação: ")]
-        public Operacao operacao { get; set; }
-
     }
 }

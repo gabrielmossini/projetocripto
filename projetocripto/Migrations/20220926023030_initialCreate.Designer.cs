@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projetocripto.Models;
 
@@ -11,9 +12,10 @@ using projetocripto.Models;
 namespace projetocripto.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20220926023030_initialCreate")]
+    partial class initialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,9 +58,6 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("Impressoraid")
-                        .HasColumnType("int");
-
                     b.Property<int>("clienteid")
                         .HasColumnType("int");
 
@@ -70,37 +69,11 @@ namespace projetocripto.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Impressoraid");
-
                     b.HasIndex("clienteid");
 
                     b.HasIndex("moedaid");
 
                     b.ToTable("Contas");
-                });
-
-            modelBuilder.Entity("projetocripto.Models.Impressora", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<DateTime>("data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("setor")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Impressora");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Moeda", b =>
@@ -155,10 +128,6 @@ namespace projetocripto.Migrations
 
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
                 {
-                    b.HasOne("projetocripto.Models.Impressora", null)
-                        .WithMany("contas")
-                        .HasForeignKey("Impressoraid");
-
                     b.HasOne("projetocripto.Models.Cliente", "cliente")
                         .WithMany("contas")
                         .HasForeignKey("clienteid")
@@ -195,11 +164,6 @@ namespace projetocripto.Migrations
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
                 {
                     b.Navigation("transasoes");
-                });
-
-            modelBuilder.Entity("projetocripto.Models.Impressora", b =>
-                {
-                    b.Navigation("contas");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Moeda", b =>

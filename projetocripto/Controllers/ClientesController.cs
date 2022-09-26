@@ -45,15 +45,15 @@ namespace projetocripto.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
-            var estado = Enum.GetValues(typeof(Estado))
-                .Cast<Estado>()
+            var secretaria = Enum.GetValues(typeof(Secretaria))
+                .Cast<Secretaria>()
                 .Select(e => new SelectListItem
                 {
                     Value = e.ToString(),
                     Text = e.ToString()
                 });
 
-            ViewBag.bagEstado = estado;
+            ViewBag.bagSecretaria = secretaria;
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace projetocripto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("id,nome,setor,secretaria")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -87,14 +87,14 @@ namespace projetocripto.Controllers
                 return NotFound();
             }
 
-            var estado = Enum.GetValues(typeof(Estado))
-                .Cast<Estado>()
+            var secretaria = Enum.GetValues(typeof(Secretaria))
+                .Cast<Secretaria>()
                 .Select(e => new SelectListItem
                 {
                     Value = e.ToString(),
                     Text = e.ToString()
                 });
-
+            ViewBag.bagSecretaria = secretaria;
             return View(cliente);
         }
 
@@ -103,7 +103,7 @@ namespace projetocripto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nome,setor,secretaria")] Cliente cliente)
         {
             if (id != cliente.id)
             {

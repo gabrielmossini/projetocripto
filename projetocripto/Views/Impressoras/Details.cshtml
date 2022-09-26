@@ -1,22 +1,16 @@
-﻿@model projetocripto.Models.Cliente
+﻿@model projetocripto.Models.Impressora
 
 @{
-    ViewData["Title"] = "Detalhes sobre Funcionario";
+    ViewData["Title"] = "Detalhes sobre Impressora";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detalhes sobre Funcionário.</h1>
+<h1>Detalhes sobre a Impressora.</h1>
 
 <div>
-    <h4>Funcionario</h4>
+    <h4>Impressora</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nome)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.setor)
         </dt>
@@ -24,10 +18,16 @@
             @Html.DisplayFor(model => model.setor)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.secretaria)
+            @Html.DisplayNameFor(model => model.status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.secretaria)
+            @Html.DisplayFor(model => model.status)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.data)
         </dd>
     </dl>
 </div>

@@ -1,29 +1,26 @@
-﻿@model IEnumerable<projetocripto.Models.Moeda>
+﻿@model IEnumerable<projetocripto.Models.Impressora>
 
 @{
-    ViewData["Title"] = "Menu de Itens";
+    ViewData["Title"] = "Impressora";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Menu de Itens</h1>
+<h1>Menu de Impressora</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-light">Registrar Item</a>
+    <a asp-action="Create" class="btn btn-light">Registrar Funcionário</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.nome)
+                @Html.DisplayNameFor(model => model.setor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.descricao)
+                @Html.DisplayNameFor(model => model.status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.valor)
+                @Html.DisplayNameFor(model => model.data)
             </th>
             <th></th>
         </tr>
@@ -32,16 +29,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.nome)
+                @Html.DisplayFor(modelItem => item.setor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.descricao)
+                @Html.DisplayFor(modelItem => item.status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.valor)
+                @Html.DisplayFor(modelItem => item.data)
             </td>
             <td>
                <a asp-action="Details" asp-route-id="@item.id" class="btn btn-primary">Detalhes</a> |

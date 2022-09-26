@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using projetocripto.Models;
 
 namespace projetocripto.Models
 {
@@ -12,5 +13,6 @@ namespace projetocripto.Models
         public DbSet<Moeda> moedas { get; set; }
         public DbSet<Conta> contas { get; set; }
         public DbSet<Transasao> transasoes{ get; set; }
+        public DbSet<projetocripto.Models.Impressora> Impressora { get; set; }
     }
 }

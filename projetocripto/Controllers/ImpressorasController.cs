@@ -9,85 +9,104 @@ using projetocripto.Models;
 
 namespace projetocripto.Controllers
 {
-    public class MoedasController : Controller
+    public class ImpressorasController : Controller
     {
         private readonly Contexto _context;
 
-        public MoedasController(Contexto context)
+        public ImpressorasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Moedas
+        // GET: Impressoras
         public async Task<IActionResult> Index()
         {
-              return View(await _context.moedas.ToListAsync());
+              return View(await _context.Impressora.ToListAsync());
         }
 
-        // GET: Moedas/Details/5
+        // GET: Impressoras/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.moedas == null)
+            if (id == null || _context.Impressora == null)
             {
                 return NotFound();
             }
 
-            var moeda = await _context.moedas
+            var impressora = await _context.Impressora
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (moeda == null)
+            if (impressora == null)
             {
                 return NotFound();
             }
 
-            return View(moeda);
+            return View(impressora);
         }
 
-        // GET: Moedas/Create
+        // GET: Impressoras/Create
         public IActionResult Create()
         {
+            var status = Enum.GetValues(typeof(Status))
+               .Cast<Status>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                });
+   
+            ViewBag.bagStatus = status;
             return View();
         }
 
-        // POST: Moedas/Create
+        // POST: Impressoras/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,descricao,quantidade,valor")] Moeda moeda)
+        public async Task<IActionResult> Create([Bind("id,setor,status,data")] Impressora impressora)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(moeda);
+                _context.Add(impressora);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(moeda);
+            return View(impressora);
         }
 
-        // GET: Moedas/Edit/5
+        // GET: Impressoras/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.moedas == null)
+            if (id == null || _context.Impressora == null)
             {
                 return NotFound();
             }
 
-            var moeda = await _context.moedas.FindAsync(id);
-            if (moeda == null)
+            var impressora = await _context.Impressora.FindAsync(id);
+            if (impressora == null)
             {
                 return NotFound();
             }
-            return View(moeda);
+            
+            var status = Enum.GetValues(typeof(Status))
+                .Cast<Status>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                });
+
+            ViewBag.bagStatus = status;
+            return View(impressora);
         }
 
-        // POST: Moedas/Edit/5
+        // POST: Impressoras/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,descricao,quantidade,valor")] Moeda moeda)
+        public async Task<IActionResult> Edit(int id, [Bind("id,setor,status,data")] Impressora impressora)
         {
-            if (id != moeda.id)
+            if (id != impressora.id)
             {
                 return NotFound();
             }
@@ -96,12 +115,12 @@ namespace projetocripto.Controllers
             {
                 try
                 {
-                    _context.Update(moeda);
+                    _context.Update(impressora);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MoedaExists(moeda.id))
+                    if (!ImpressoraExists(impressora.id))
                     {
                         return NotFound();
                     }
@@ -112,49 +131,49 @@ namespace projetocripto.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(moeda);
+            return View(impressora);
         }
 
-        // GET: Moedas/Delete/5
+        // GET: Impressoras/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.moedas == null)
+            if (id == null || _context.Impressora == null)
             {
                 return NotFound();
             }
 
-            var moeda = await _context.moedas
+            var impressora = await _context.Impressora
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (moeda == null)
+            if (impressora == null)
             {
                 return NotFound();
             }
 
-            return View(moeda);
+            return View(impressora);
         }
 
-        // POST: Moedas/Delete/5
+        // POST: Impressoras/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.moedas == null)
+            if (_context.Impressora == null)
             {
-                return Problem("Entity set 'Contexto.moedas'  is null.");
+                return Problem("Entity set 'Contexto.Impressora'  is null.");
             }
-            var moeda = await _context.moedas.FindAsync(id);
-            if (moeda != null)
+            var impressora = await _context.Impressora.FindAsync(id);
+            if (impressora != null)
             {
-                _context.moedas.Remove(moeda);
+                _context.Impressora.Remove(impressora);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MoedaExists(int id)
+        private bool ImpressoraExists(int id)
         {
-          return _context.moedas.Any(e => e.id == id);
+          return _context.Impressora.Any(e => e.id == id);
         }
     }
 }

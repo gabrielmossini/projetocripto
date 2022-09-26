@@ -53,7 +53,7 @@ namespace projetocripto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,data,quantidade,valor,operacao")] Transasao transasao)
+        public async Task<IActionResult> Create([Bind("id,data")] Transasao transasao)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace projetocripto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,data,quantidade,valor,operacao")] Transasao transasao)
+        public async Task<IActionResult> Edit(int id, [Bind("id,data")] Transasao transasao)
         {
             if (id != transasao.id)
             {

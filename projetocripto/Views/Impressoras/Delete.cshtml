@@ -1,22 +1,17 @@
-﻿@model projetocripto.Models.Cliente
+﻿@model projetocripto.Models.Impressora
 
 @{
-    ViewData["Title"] = "Exclusão de Funcionario";
+    ViewData["Title"] = "Exclusão de Impressora";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Menu de Exclusão de Funcionários.</h1>
+<h1>Menu de Exclusão de Impressora.</h1>
 
-<h3>Você tem certeza que deseja excluir esse Funcionário?</h3>
+<h3>Você tem certeza que deseja excluir essa Impressora?</h3>
 <div>
+    <h4>Impressora</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nome)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.setor)
         </dt>
@@ -24,14 +19,20 @@
             @Html.DisplayFor(model => model.setor)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.secretaria)
+            @Html.DisplayNameFor(model => model.status)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.secretaria)
+            @Html.DisplayFor(model => model.status)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.data)
         </dd>
     </dl>
     
-    <form asp-action="Confirmar">
+    <form asp-action="Delete">
         <input type="hidden" asp-for="id" />
         <input type="submit" value="Excluir" class="btn btn-danger" /> |
         <a asp-action="Index" class="btn btn-light">Retornar</a>

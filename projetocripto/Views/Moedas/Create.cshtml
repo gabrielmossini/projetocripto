@@ -1,18 +1,23 @@
 ﻿@model projetocripto.Models.Moeda
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Registro de Items";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Menu de Registro de Items</h1>
 
-<h4>Moeda</h4>
+<h4>Insira os dados Abaixo para Registrar Items para comprar.</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nome" class="control-label"></label>
+                <input asp-for="nome" class="form-control" />
+                <span asp-validation-for="nome" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="descricao" class="control-label"></label>
                 <input asp-for="descricao" class="form-control" />
@@ -24,24 +29,16 @@
                 <span asp-validation-for="quantidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="compra" class="control-label"></label>
-                <input asp-for="compra" class="form-control" />
-                <span asp-validation-for="compra" class="text-danger"></span>
+                <label asp-for="valor" class="control-label"></label>
+                <input asp-for="valor" class="form-control" />
+                <span asp-validation-for="valor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="venda" class="control-label"></label>
-                <input asp-for="venda" class="form-control" />
-                <span asp-validation-for="venda" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-light">Retornar</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

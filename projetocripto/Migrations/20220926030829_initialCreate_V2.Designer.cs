@@ -12,8 +12,8 @@ using projetocripto.Models;
 namespace projetocripto.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20220922020143_initialCreate")]
-    partial class initialCreate
+    [Migration("20220926030829_initialCreate_V2")]
+    partial class initialCreate_V2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,18 +32,15 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("cidade")
+                    b.Property<string>("nome")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("estado")
+                    b.Property<int>("secretaria")
                         .HasColumnType("int");
 
-                    b.Property<int>("idade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("nome")
+                    b.Property<string>("setor")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
@@ -61,6 +58,9 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<int?>("Impressoraid")
+                        .HasColumnType("int");
+
                     b.Property<int>("clienteid")
                         .HasColumnType("int");
 
@@ -72,11 +72,37 @@ namespace projetocripto.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("Impressoraid");
+
                     b.HasIndex("clienteid");
 
                     b.HasIndex("moedaid");
 
                     b.ToTable("Contas");
+                });
+
+            modelBuilder.Entity("projetocripto.Models.Impressora", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("setor")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Impressora");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Moeda", b =>
@@ -87,18 +113,20 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<float>("compra")
-                        .HasColumnType("real");
-
                     b.Property<string>("descricao")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<float>("quantidade")
-                        .HasColumnType("real");
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
 
-                    b.Property<float>("venda")
+                    b.Property<int>("quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<float>("valor")
                         .HasColumnType("real");
 
                     b.HasKey("id");
@@ -114,30 +142,25 @@ namespace projetocripto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("contaid")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("data")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("operacao")
+                    b.Property<int>("impressoraid")
                         .HasColumnType("int");
-
-                    b.Property<float>("quantidade")
-                        .HasColumnType("real");
-
-                    b.Property<float>("valor")
-                        .HasColumnType("real");
 
                     b.HasKey("id");
 
-                    b.HasIndex("contaid");
+                    b.HasIndex("impressoraid");
 
                     b.ToTable("Transacoes");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
                 {
+                    b.HasOne("projetocripto.Models.Impressora", null)
+                        .WithMany("contas")
+                        .HasForeignKey("Impressoraid");
+
                     b.HasOne("projetocripto.Models.Cliente", "cliente")
                         .WithMany("contas")
                         .HasForeignKey("clienteid")
@@ -157,13 +180,13 @@ namespace projetocripto.Migrations
 
             modelBuilder.Entity("projetocripto.Models.Transasao", b =>
                 {
-                    b.HasOne("projetocripto.Models.Conta", "conta")
+                    b.HasOne("projetocripto.Models.Conta", "impressora")
                         .WithMany("transasoes")
-                        .HasForeignKey("contaid")
+                        .HasForeignKey("impressoraid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("conta");
+                    b.Navigation("impressora");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Cliente", b =>
@@ -174,6 +197,11 @@ namespace projetocripto.Migrations
             modelBuilder.Entity("projetocripto.Models.Conta", b =>
                 {
                     b.Navigation("transasoes");
+                });
+
+            modelBuilder.Entity("projetocripto.Models.Impressora", b =>
+                {
+                    b.Navigation("contas");
                 });
 
             modelBuilder.Entity("projetocripto.Models.Moeda", b =>

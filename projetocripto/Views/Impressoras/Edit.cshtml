@@ -1,13 +1,13 @@
-﻿@model projetocripto.Models.Cliente
+﻿@model projetocripto.Models.Impressora
 
 @{
-    ViewData["Title"] = "Edição de Funcionarios";
+    ViewData["Title"] = "Edição de Impressoras";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Menu de Edição de Funcionários.</h1>
+<h1>Menu de Edição de Impressoras.</h1>
 
-<h4>Insira os dados Abaixo para Editar Funcionários.</h4>
+<h4>Insira os dados Abaixo para Editar Impressora.</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,21 +15,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="nome" class="control-label"></label>
-                <input asp-for="nome" class="form-control" />
-                <span asp-validation-for="nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="setor" class="control-label"></label>
                 <input asp-for="setor" class="form-control" />
                 <span asp-validation-for="setor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="secretaria" class="control-label"></label>
-                <select asp-for="secretaria" asp-items="ViewBag.bagSecretaria" class="form-control">
-                    <option selected="selected" value="">Selecione uma Secretaria</option>
+                <label asp-for="status" class="control-label"></label>
+                <select asp-for="status" asp-items="ViewBag.bagStatus" class="form-control">
+                    <option selected="selected" value="">Editar Status</option>
                 </select>
-                <span asp-validation-for="secretaria" class="text-danger"></span>
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="data" class="control-label"></label>
+                <input asp-for="data" class="form-control" />
+                <span asp-validation-for="data" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" /> |
